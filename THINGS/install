@@ -2,7 +2,7 @@
 
 function checkRoot() {
     if [[ "$EUID" -ne "0" ]]; then
-        warning "Scripts must be run as root."
+        print "Scripts must be run as root."
         exit 1
     fi
 }
