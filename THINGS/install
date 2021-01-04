@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function checkRoot() {
+    if [[ "$EUID" -ne "0" ]]; then
+        warning "Scripts must be run as root."
+        exit 1
+    fi
+}
+
+checkRoot
+if [[ -f "/usr/bin/pip" ]]; then
+    sudo apt install -y pip
+fi
+
+sudo apt install -y python3-nmap
