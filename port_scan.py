@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# VERSION : 1.06.0
 
 ##
 # HEADER
@@ -31,7 +30,14 @@ class ScanMachine():
 
         self.t1 = time.time()
         
-        isup(self.host, exitOnFail=True)
+        if not isup(self.host):
+
+            print(f"{self.target} is up")
+
+        else:
+
+            print(f"{self.target} is down, exiting ..")
+            exit()
 
         self.scanPort()
         

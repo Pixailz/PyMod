@@ -50,7 +50,7 @@ def checkRoot(exitOnFail=False):
 
             return True
 
-def isup(target, exitOnFail=False):
+def isup(target):
 
     if os.name == "posix":
 
@@ -62,18 +62,11 @@ def isup(target, exitOnFail=False):
 
     if "ttl=" in str(ping.stdout).lower():
 
-        print(f"\n{target} is up\n")
         return True
 
     else:
 
-        if exitOnFail:
-
-            print(f"\n{target} is down, exiting ...\n")
-        
-        else:
-            
-            return False
+        return False
 
 def cs():
 
