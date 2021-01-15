@@ -6,6 +6,7 @@ import ctypes
 import subprocess
 import threading
 import os
+from time import time
 from utils import checkRoot
  #
 ##
@@ -24,7 +25,10 @@ class SubnetScan():
 
         checkRoot(exitOnFail=True)
 
+        self.t1 = time()
         self.threading()
+        self.t2 = time() - self.t1
+
         if o:
             self.output()
 
@@ -60,13 +64,14 @@ class SubnetScan():
 
     def output(self):
 
-        print("Scan terminated. {} host UP\n".format(len(self.ipup)))
+        print("Scan terminated in {}. {} host UP\n".format(self.t2, len(self.ipup)))
 
+        self.ipup.sort(reverse=True)
         for x in range(len(self.ipup)):
         
-            print(f"{self.ipup[x]} is up")
+            print("{}.{} is up".format(self.target, self.ipup[x]))
 
         
 
 if __name__ == "__main__":
-    pass
+    scan = SubnetScan(target="192.168.1")
