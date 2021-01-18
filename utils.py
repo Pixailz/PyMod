@@ -67,7 +67,7 @@ def isup(target):
 
         ping = subprocess.run(["ping", "-n", "1", "-l", "0", target], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
-    if "ttl=" in str(ping.stdout).lower():
+    if "ttl=" in str(ping.stdout).lower() or "temps=" in str(ping.stdout).lower():
 
         return True
 
