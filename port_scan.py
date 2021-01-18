@@ -7,6 +7,7 @@ import nmap3
 import time
 from utils import checkRoot
 from utils import isup
+from utils import truncate
 
 TIMEOUT = 0.5
 #
@@ -25,12 +26,8 @@ class ScanMachine():
         self.t2 = ""
 
         checkRoot(exitOnFail=True)
-
-        self.validTarget()
-
-        self.t1 = time.time()
         
-        if not isup(self.host):
+        if isup(self.host):
 
             print(f"{self.target} is up")
 
@@ -39,9 +36,13 @@ class ScanMachine():
             print(f"{self.target} is down, exiting ..")
             exit()
 
+        self.validTarget()
+
+        self.t1 = time.time()
+
         self.scanPort()
         
-        self.t2 = self.truncate(str(time.time() - self.t1))
+        self.t2 = truncate(time.time() - self.t1)
 
         if o:
             self.output()
@@ -58,10 +59,6 @@ class ScanMachine():
                 print(f'{self.ports[x]["portid"]}/{self.ports[x]["protocol"]}  \t{self.ports[x]["state"]}    \t{self.ports[x]["service"]}')
         
         print(f'\nHost ({self.target}) scanned in {self.t2} sec')
-
-    def truncate(self, t):
-        
-        return t[:t.find(".") + 3]
 
     def validTarget(self):
 
@@ -115,4 +112,4 @@ class ScanMachine():
         print(f"T2 :\t\t{self.t2}")
 
 if __name__ == "__main__":
-    test = ScanMachine(target="45.33.32.156")
+    test = ScanMachine(target="abcdefghijklmonpqrstuvwxyz.xz")

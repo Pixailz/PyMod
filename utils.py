@@ -10,9 +10,16 @@ import subprocess
  #
 ##
 
-def truncate(t):
-
-    return t[:t.find(".") + 3]
+def truncate(f):
+    
+    if type(f) is not float:
+    
+        raise TypeError("Le parametre attendus doit etre flottant")
+    
+    flottant = str(f)
+    p_e, p_f = flottant.split(".")
+    
+    return ",".join([p_e, p_f[:2]])
 
 def checkRoot(exitOnFail=False):
 
@@ -54,11 +61,11 @@ def isup(target):
 
     if os.name == "posix":
 
-        ping = subprocess.run(["ping", "-c", "1", "-s", "0", target], stdout=subprocess.PIPE)
+        ping = subprocess.run(["ping", "-c", "1", "-s", "0", target], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
     elif os.name == "nt":
 
-        ping = subprocess.run(["ping", "-n", "1", "-l", "0", target], stdout=subprocess.PIPE)
+        ping = subprocess.run(["ping", "-n", "1", "-l", "0", target], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
 
     if "ttl=" in str(ping.stdout).lower():
 
