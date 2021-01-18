@@ -19,7 +19,7 @@ def truncate(f):
     flottant = str(f)
     p_e, p_f = flottant.split(".")
     
-    return ",".join([p_e, p_f[:2]])
+    return ".".join([p_e, p_f[:2]])
 
 def checkRoot(exitOnFail=False):
 
