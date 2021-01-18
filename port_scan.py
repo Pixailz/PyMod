@@ -9,7 +9,6 @@ from utils import checkRoot
 from utils import isup
 from utils import truncate
 
-TIMEOUT = 0.5
 #
 ##
 
@@ -25,7 +24,7 @@ class ScanMachine():
         self.t1 = ""
         self.t2 = ""
 
-        checkRoot(exitOnFail=True)
+        checkRoot(exitOnFail=False)
         
         if isup(self.host):
 
@@ -72,7 +71,14 @@ class ScanMachine():
         except socket.error:
 
             self.hostname = self.target
-            self.host = socket.gethostbyname(self.target)
+            try:
+
+                self.host = socket.gethostbyname(self.target)
+
+            except socket.gaierror:
+
+                print(f"Cannot get ip from {self.target}, exiting.")
+                exit()
 
     def scanPort(self):
 
@@ -112,4 +118,4 @@ class ScanMachine():
         print(f"T2 :\t\t{self.t2}")
 
 if __name__ == "__main__":
-    test = ScanMachine(target="abcdefghijklmonpqrstuvwxyz.xz")
+    test = ScanMachine(target="hqsbhdqshdbhqsbdh.com")
