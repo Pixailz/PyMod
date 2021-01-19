@@ -75,6 +75,44 @@ def isup(target):
 
         return False
 
+def menu(content, title="MENU"):
+
+    if type(content) is not list:
+
+        print("args should be a list")
+        exit()
+
+    loop = True
+
+    while loop:
+
+        sizeMenu = len(content)
+
+        print(title.center(40, "="), end="\n\n")
+
+        for k, v in enumerate(content):
+            print(f"{k+1} : {v}")
+
+        answer = input(f"\n(1-{sizeMenu}) : ")[:1]
+
+        choice = list(range(1, sizeMenu + 1))
+        tmp = ""
+
+        for number in choice:
+            tmp = tmp + str(number)
+
+        choice = tmp
+
+        if answer in choice:
+            return answer
+
+        else:
+            print(f"enter a good choice (1-{sizeMenu})")
+            input()
+            cs()
+            continue
+
+
 def cs():
 
     if os.name == "posix":
@@ -86,4 +124,12 @@ def cs():
         os.system("cls")
 
 if __name__ == "__main__":
-    pass
+    choice = [
+        "Scan Port",    # 1
+        "Scan Subnet",  # 2
+        "Another choice",
+        "and antoher..",
+        "and the final ;)"
+    ]
+
+    print(menu(content=choice, title="Main Menu"))
