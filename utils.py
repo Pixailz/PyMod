@@ -112,7 +112,6 @@ def menu(content, title="MENU"):
             cs()
             continue
 
-
 def cs():
 
     if os.name == "posix":
@@ -124,12 +123,4 @@ def cs():
         os.system("cls")
 
 if __name__ == "__main__":
-    choice = [
-        "Scan Port",    # 1
-        "Scan Subnet",  # 2
-        "Another choice",
-        "and antoher..",
-        "and the final ;)"
-    ]
-
-    print(menu(content=choice, title="Main Menu"))
+    pass
