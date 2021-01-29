@@ -1,15 +1,17 @@
 #coding:utf-8
 
+import importlib
 import sys
+sys.path.append("./modules")
 import os
 
 modules = []
 
-availlable_command = [
-    "list",
+available_command = [
     "exit",
-    "load",
-    "help"
+    "use",
+    "help",
+    "cls"
 ]
 
 def init():
@@ -25,32 +27,45 @@ def init():
         print(f"modules folder not found, exiting ..")
         exit()
 
+def printHelp(arg=0):
+    
+    if arg == 0:
+    
+        print("list of available command : ")
+
+        for v in available_command:
+
+            print("    ",v)
+    
+    elif arg == 1:
+
+        print("List of available module")
+
+        for mod in modules:
+
+            print(f"    {mod}")
+
 def loadMod(module, argument=None):
-    
-    
-    
-    print(f"module loaded : {module}\n\
-arg passed : {argument}")
 
-def printHelp():
-    print("list of available command : ")
-    for v in availlable_command:
-
-        print("    ",v)
-
-def printMod():
+    module = __import__(module)
     
-    for mod in modules:
-        print(f"    {mod}")
+    if module == "scan_port": 
+        
+        target = module.ScanMachine(argument)
+        
+    elif module == "scan_subnet":
+
+        target = module.SubnetScan(argument)
 
 def welcomeMess():
-    print("Welcome to my terminal\n\
-Author : Pixailz\n\
-git : https://github.com/Pixailz/PyMod")
+    print("""Welcome to my terminal
+Author : Pixailz
+git : https://github.com/Pixailz/PyMod""")
 
 def mainLoop():
 
     os.system("clear")
+    welcomeMess()
     loop = True
 
     while loop:
@@ -67,7 +82,7 @@ def mainLoop():
                 
             else:
               
-              printMod()
+              printHelp(arg=1)
         
         elif entry == "cls":
   
@@ -87,7 +102,6 @@ def mainLoop():
 
 def main():
     init()
-    #welcomeMess()
     mainLoop()
 
 main()
