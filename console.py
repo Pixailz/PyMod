@@ -5,6 +5,13 @@ import os
 
 modules = []
 
+availlable_command = [
+    "list",
+    "exit",
+    "load",
+    "help"
+]
+
 def init():
 
     try:
@@ -18,15 +25,23 @@ def init():
         print(f"modules folder not found, exiting ..")
         exit()
 
-def loadMod(*command):
+def loadMod(module, argument=None):
     
-    for k, v in enumerate(command):
-        print(k,v)
     
-    """print(f"module loaded : {module}\n\
-arg passed : {arg}")"""
+    
+    print(f"module loaded : {module}\n\
+arg passed : {argument}")
 
+def printHelp():
+    print("list of available command : ")
+    for v in availlable_command:
 
+        print("    ",v)
+
+def printMod():
+    
+    for mod in modules:
+        print(f"    {mod}")
 
 def welcomeMess():
     print("Welcome to my terminal\n\
@@ -35,26 +50,36 @@ git : https://github.com/Pixailz/PyMod")
 
 def mainLoop():
 
-    os.system("cls")
+    os.system("clear")
     loop = True
 
     while loop:
 
-        entry = input("Pix@PyMod~: ")
-
-        if entry.split(" ")[0] in modules:
-            entry = entry.split(" ")
-            loadMod(entry)
-
+        entry = input("Pix@PyMod : ").strip()
+        
+        if entry.split(" ")[0] == "use":
+          
+            if len(entry.split()) > 1 and entry.split(" ")[1] in modules:
+              
+                mod = entry.split(" ")[1]
+                arg = "|".join(entry.split(" ")[2:])
+                loadMod(module=mod, argument=arg)
+                
+            else:
+              
+              printMod()
+        
+        elif entry == "cls":
+  
+            os.system("clear")
+ 
         elif entry == "exit":
-            exit()
+          
+            break
 
         elif entry == "help":
-            print("list of available modules :")
-
-            for v in modules:
-
-                print("\t",v)
+          
+            printHelp()
 
         else:
 
@@ -66,4 +91,3 @@ def main():
     mainLoop()
 
 main()
-
