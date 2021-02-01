@@ -1,5 +1,5 @@
 #coding:utf-8
-
+#use scan_port 192.168.1.254
 import importlib
 import sys
 sys.path.append("./modules")
@@ -47,16 +47,16 @@ def printHelp(arg=0):
             print(f"    {mod}")
 
 def loadMod(module, argument=None):
-
-    module = __import__(module)
+    
+    modules = __import__(module)
     
     if module == "scan_port": 
         
-        target = module.ScanMachine(argument)
+        target = modules.ScanMachine(argument)
         
     elif module == "scan_subnet":
 
-        target = module.SubnetScan(argument)
+        target = modules.SubnetScan(argument)
 
 def welcomeMess():
     print("""\
