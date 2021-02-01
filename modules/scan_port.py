@@ -15,8 +15,9 @@ from utils import *
 
 class ScanMachine():
 
-    def __init__(self, target, o=True):
+    def __init__(self, target, output="Screen"):
 
+        self.output = output
         self.target = target
         self.host = ""
         self.hostname = ""
@@ -25,7 +26,7 @@ class ScanMachine():
         self.t1 = ""
         self.t2 = ""
 
-        checkRoot(exitOnFail=True)
+        checkRoot(exitOnFail=False)
         
         if isup(self.target):
 
@@ -44,21 +45,104 @@ class ScanMachine():
         
         self.t2 = truncate(time.time() - self.t1)
 
-        if o:
-            self.output()
-    
-    def output(self):
-
-        print("PORT\t\tSTATE\t\tSERVICE\t\tVERSION\n")
-
-        for x in range(len(self.ports)):
-            if len(self.ports[x]) == 5:
-                print(f'{self.ports[x]["portid"]}/{self.ports[x]["protocol"]}  \t{self.ports[x]["state"]}    \t{self.ports[x]["service"]}     \t{self.ports[x]["version"]}')
+        self.outPut()
             
-            else:
-                print(f'{self.ports[x]["portid"]}/{self.ports[x]["protocol"]}  \t{self.ports[x]["state"]}    \t{self.ports[x]["service"]}')
+    
+    def outPut(self):
         
-        print(f'\nHost ({self.target}) scanned in {self.t2} sec')
+        if self.output == "Screen":
+
+            print("PORT\t\tSTATE\t\tSERVICE\t\tVERSION\n")
+
+            for x in range(len(self.ports)):
+                if len(self.ports[x]) == 5:
+                    print(f'{self.ports[x]["portid"]}/{self.ports[x]["protocol"]}  \t{self.ports[x]["state"]}    \t{self.ports[x]["service"]}     \t{self.ports[x]["version"]}')
+                
+                else:
+                    print(f'{self.ports[x]["portid"]}/{self.ports[x]["protocol"]}  \t{self.ports[x]["state"]}    \t{self.ports[x]["service"]}')
+            
+            print(f'\nHost ({self.target}) scanned in {self.t2} sec')
+        
+        elif self.output == "None":
+
+            pass
+        
+        elif self.output == "File":
+
+            target = dict()
+            
+            target["ip"] = self.host
+            target["hostname"] = self.hostname
+            target["ports"] = self.ports
+
+            print(target)
+            
+        elif self.output == "File":
+            
+            with open("tmp", "w") as f:
+            
+                print(f'''\
+"ip" : "{self.host}"
+"hostname" : "{self.hostname}"
+"ports" : [\
+''', file=f)
+
+            count = 0
+
+            with open("tmp", "a") as f:
+
+                for x in range(len(self.ports)):
+                    
+                    count += 1
+                    
+                    if len(self.ports[x]) == 5:
+                        
+                        if count < len(self.ports):
+                        
+                            print(f'''\
+    {{
+        "portid" : "{self.ports[x]["portid"]}",
+        "protocol" : "{self.ports[x]["protocol"]}", 
+        "state" : "{self.ports[x]["state"]}",
+        "service" : "{self.ports[x]["service"]}",
+        "version" : "{self.ports[x]["version"]}"
+    }},\
+''', file=f)
+                        else:
+                            print(f'''\
+    {{
+        "portid" : "{self.ports[x]["portid"]}",
+        "protocol" : "{self.ports[x]["protocol"]}", 
+        "state" : "{self.ports[x]["state"]}",
+        "service" : "{self.ports[x]["service"]}",
+        "version" : "{self.ports[x]["version"]}"
+    }}\
+''', file=f)
+                
+                    else:
+                    
+                        if count < len(self.ports):
+                    
+                            print(f'''\
+    {{
+        "portid" : "{self.ports[x]["portid"]}",
+        "protocol" : "{self.ports[x]["protocol"]}", 
+        "state" : "{self.ports[x]["state"]}",
+        "service" : "{self.ports[x]["service"]}"
+    }},\
+''', file=f)
+                        else:
+
+                            print(f'''\
+    {{
+        "portid" : "{self.ports[x]["portid"]}",
+        "protocol" : "{self.ports[x]["protocol"]}", 
+        "state" : "{self.ports[x]["state"]}",
+        "service" : "{self.ports[x]["service"]}"
+    }}\
+''', file=f)
+
+                print("]", file=f)
 
     def validTarget(self):
 
@@ -119,4 +203,4 @@ class ScanMachine():
         print(f"T2 :\t\t{self.t2}")
 
 if __name__ == "__main__":
-    ScanMachine("192.168.1.254")
+    ScanMachine("scanme.nmap.org", output="Checker")
