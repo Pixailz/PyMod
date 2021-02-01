@@ -58,7 +58,7 @@ def loadMod(module, argument=None):
         target = module.SubnetScan(argument)
 
 def welcomeMess():
-    print("""Welcome to my terminal
+    print("""\
 Author : Pixailz
 git : https://github.com/Pixailz/PyMod""")
 
