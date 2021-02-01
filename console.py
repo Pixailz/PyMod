@@ -4,6 +4,7 @@ import importlib
 import sys
 sys.path.append("./modules")
 import os
+from utils import cs
 
 modules = []
 
@@ -64,7 +65,7 @@ git : https://github.com/Pixailz/PyMod""")
 
 def mainLoop():
 
-    os.system("clear")
+    cs()
     welcomeMess()
     loop = True
 
@@ -86,7 +87,7 @@ def mainLoop():
         
         elif entry == "cls":
   
-            os.system("clear")
+            cs()
  
         elif entry == "exit":
           
