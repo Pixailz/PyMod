@@ -69,13 +69,13 @@ class ScanMachine():
         
         elif self.output == "Checker":
 
-            target = dict()
+            report = dict()
             
-            target["ip"] = self.host
-            target["hostname"] = self.hostname
-            target["ports"] = self.ports
+            report["ip"] = self.host
+            report["hostname"] = self.hostname
+            report["ports"] = self.ports
 
-            writeContent(content=target, file="test")
+            writeContent(content=report, file="test")
             
         elif self.output == "File":
             
