@@ -67,7 +67,7 @@ class ScanMachine():
 
             pass
         
-        elif self.output == "File":
+        elif self.output == "Checker":
 
             target = dict()
             
@@ -75,7 +75,7 @@ class ScanMachine():
             target["hostname"] = self.hostname
             target["ports"] = self.ports
 
-            print(target)
+            writeContent(content=target, file="test")
             
         elif self.output == "File":
             

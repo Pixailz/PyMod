@@ -121,6 +121,11 @@ def cs():
     elif os.name == "nt":
 
         os.system("cls")
-
+        
+def writeContent(content, file):
+  print("from utils.py")
+  print(content)
+  print(file)
+  
 if __name__ == "__main__":
     pass
