@@ -1,13 +1,7 @@
-# Version : 1.07.1
+# Version : 2.00.0
 """
 TODO
     - change port open discover
     from nmaplib to socket lib (port_scan)
-    - review isup func (utils)
-    - add user input in pentest module
+    - add checker() to utils.py
 """
-
-__all__ = [
-    "pentest",
-    "utils"
-]
