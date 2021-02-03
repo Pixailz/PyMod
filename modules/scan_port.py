@@ -46,37 +46,40 @@ class ScanMachine():
         self.t2 = truncate(time.time() - self.t1)
 
         self.outPut()
-            
+    
+    def getoutPut(self):
+        
+        return self.report
     
     def outPut(self):
-        
-        if self.output == "Screen":
+        if self.output == "None":
+
+            pass
+
+        elif self.output == "Screen":
 
             print("PORT\t\tSTATE\t\tSERVICE\t\tVERSION\n")
 
             for x in range(len(self.ports)):
+              
                 if len(self.ports[x]) == 5:
+                  
                     print(f'{self.ports[x]["portid"]}/{self.ports[x]["protocol"]}  \t{self.ports[x]["state"]}    \t{self.ports[x]["service"]}     \t{self.ports[x]["version"]}')
                 
                 else:
+                  
                     print(f'{self.ports[x]["portid"]}/{self.ports[x]["protocol"]}  \t{self.ports[x]["state"]}    \t{self.ports[x]["service"]}')
             
             print(f'\nHost ({self.target}) scanned in {self.t2} sec')
-        
-        elif self.output == "None":
+ 
+        elif self.output == "console":
 
-            pass
-        
-        elif self.output == "Checker":
-
-            report = dict()
+            self.report = dict()
             
-            report["ip"] = self.host
-            report["hostname"] = self.hostname
-            report["ports"] = self.ports
+            self.report["ip"] = self.host
+            self.report["hostname"] = self.hostname
+            self.report["ports"] = self.ports
 
-            writeContent(content=report, file="test")
-            
         elif self.output == "File":
             
             with open("tmp", "w") as f:
@@ -193,14 +196,5 @@ class ScanMachine():
 
             self.ports.append(OPEN_PORT)
 
-    def afficher(self):
-
-        print(f"target :\t{self.target}")
-        print(f"host :\t\t{self.host}")
-        print(f"hostname :\t{self.hostname}")
-        print(f"ports :\t\t{self.ports}")
-        print(f"T1 :\t\t{self.t1}")
-        print(f"T2 :\t\t{self.t2}")
-
 if __name__ == "__main__":
-    ScanMachine("scanme.nmap.org", output="Checker")
+    ScanMachine("scanme.nmap.org", output="console")

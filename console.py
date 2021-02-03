@@ -46,13 +46,18 @@ def printHelp(arg=0):
 
             print(f"    {mod}")
 
+def contentCheck(content, module_used):
+
+    print(content, module_used)
+
 def loadMod(module, argument=None):
     
     modules = __import__(module)
     
     if module == "scan_port": 
         
-        target = modules.ScanMachine(argument)
+        scan_port = modules.ScanMachine(target=argument, output="console")
+        contentCheck(content=scan_port.getoutPut(), module_used=module)
         
     elif module == "scan_subnet":
 
