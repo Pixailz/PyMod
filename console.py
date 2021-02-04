@@ -92,27 +92,45 @@ def mainLoop():
 
         entry = input("Pix@PyMod : ").strip()
         
-        if entry.split(" ")[0] == "use":
+        if len(entry.split(" ")) == 0:
+            hasArgument = False
+        else:
+            hasArgument = True
+
+        if hasArgument:
+
+            command = entry.split(" ")[0]
+            argument = list()
+
+            for value in entry.split(" "):
+
+                argument.append(value)
+
+        else:
+
+            command = entry.split(" ")[0]
+
+        if command == "use":
           
-            if len(entry.split()) > 1 and entry.split(" ")[1] in modules:
+            if hasArgument and argument[1] in modules:
               
-                mod = entry.split(" ")[1]
-                arg = "|".join(entry.split(" ")[2:])
+                mod = argument[1]
+                arg = "|".join(argument[2:])
                 loadMod(module=mod, argument=arg)
                 
             else:
               
-              printHelp(arg=1)
+                printHelp(arg=1)
         
-        elif entry == "cls":
+        elif command == "cls":
   
             cs()
  
-        elif entry == "exit":
+        elif command == "exit":
           
             break
 
-        elif entry == "help":
+        elif command == "help":
           
             printHelp()
 
