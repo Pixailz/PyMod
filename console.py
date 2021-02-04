@@ -78,7 +78,7 @@ def welcomeMess():
     print("""\
 git : https://github.com/Pixailz/PyMod""")
 
-def checkEntry(command, hasArgument=False, argument=[]):
+def checkEntry(command, argument=[]):
 
     if command == "use":
 
@@ -143,7 +143,7 @@ def mainLoop():
 
                     count = True
 
-            checkEntry(command=command, hasArgument=hasArgument, argument=argument)
+            checkEntry(command=command, argument=argument)
 
         else:
 
