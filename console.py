@@ -78,6 +78,35 @@ def welcomeMess():
     print("""\
 git : https://github.com/Pixailz/PyMod""")
 
+def checkEntry(command, hasArgument=False, argument=[]):
+
+    if command == "use":
+
+        if len(argument) > 1 and argument[0] in modules:
+            
+            mod = argument[0]
+            arg = "|".join(argument[1:])
+            loadMod(module=mod, argument=arg)
+
+        else:
+            printHelp(arg=1)
+
+    elif command == "cls":
+
+        cs()
+
+    elif command == "exit":
+        
+        exit()
+
+    elif command == "help":
+        
+        printHelp()
+
+    else:
+
+        print("command not found")
+
 def mainLoop():
 
     init_modules()
@@ -92,50 +121,33 @@ def mainLoop():
 
         entry = input("Pix@PyMod : ").strip()
         
-        if len(entry.split(" ")) == 0:
+        if len(entry.split(" ")) == 1:
             hasArgument = False
         else:
             hasArgument = True
 
         if hasArgument:
 
-            command = entry.split(" ")[0]
+            command = entry.split()[0]
             argument = list()
+
+            count = False
 
             for value in entry.split(" "):
 
-                argument.append(value)
+                if count:
+
+                    argument.append(value)
+
+                else:
+
+                    count = True
+
+            checkEntry(command=command, hasArgument=hasArgument, argument=argument)
 
         else:
 
             command = entry.split(" ")[0]
-
-        if command == "use":
-          
-            if hasArgument and argument[1] in modules:
-              
-                mod = argument[1]
-                arg = "|".join(argument[2:])
-                loadMod(module=mod, argument=arg)
-                
-            else:
-              
-                printHelp(arg=1)
-        
-        elif command == "cls":
-  
-            cs()
- 
-        elif command == "exit":
-          
-            break
-
-        elif command == "help":
-          
-            printHelp()
-
-        else:
-
-            print("command not found")
+            checkEntry(command=command)
 
 mainLoop()
