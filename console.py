@@ -10,12 +10,11 @@ import sys
 sys.path.append("./modules")
 from utils import cs
 
-modules = []
+modules = {}
 
 available_command = [
     "exit",
     "use",
-    "uset",
     "help",
     "cls"
 ]
@@ -24,13 +23,17 @@ available_command = [
 ##
 
 
-def init():
+def init_modules():
 
     try:
 
-        for v in os.listdir("./modules"):
+        for value in os.listdir("./modules"):
 
-            modules.append(v.replace(".py", ""))
+                value = value.replace(".py", "")
+
+                mod = __import__(value)
+
+                modules[value] = mod
 
     except FileNotFoundError:
         
@@ -61,26 +64,28 @@ def contentCheck(content, module_used):
 
 def loadMod(module, argument=None):
     
-    modules = __import__(module)
-    
     if module == "scan_port": 
         
-        scan_port = modules.ScanMachine(target=argument, output="console")
+        scan_port = modules["scan_port"].ScanMachine(target=argument, output="console")
+
         contentCheck(content=scan_port.getoutPut(), module_used=module)
         
     elif module == "scan_subnet":
 
-        target = modules.SubnetScan(argument)
+        target = modules["scan_subnet"].SubnetScan(argument)
 
 def welcomeMess():
     print("""\
-Author : Pixailz
 git : https://github.com/Pixailz/PyMod""")
 
 def mainLoop():
 
+    init_modules()
+    
     cs()
+    
     #welcomeMess()
+    
     loop = True
 
     while loop:
@@ -115,8 +120,4 @@ def mainLoop():
 
             print("command not found")
 
-def main():
-    init()
-    mainLoop()
-
-main()
+mainLoop()
