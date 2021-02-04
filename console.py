@@ -1,9 +1,13 @@
 #coding:utf-8
 #use scan_port 192.168.1.254
-import importlib
-import sys
-sys.path.append("./modules")
+
+##
+# Header
+
 import os
+import sys
+
+sys.path.append("./modules")
 from utils import cs
 
 modules = []
@@ -11,9 +15,14 @@ modules = []
 available_command = [
     "exit",
     "use",
+    "uset",
     "help",
     "cls"
 ]
+
+ #
+##
+
 
 def init():
 
@@ -71,7 +80,7 @@ git : https://github.com/Pixailz/PyMod""")
 def mainLoop():
 
     cs()
-    welcomeMess()
+    #welcomeMess()
     loop = True
 
     while loop:
