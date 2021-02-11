@@ -11,14 +11,14 @@ import subprocess
 ##
 
 def truncate(f):
-    
+
     if type(f) is not float:
-    
+
         raise TypeError("Le parametre attendus doit etre flottant")
-    
+
     flottant = str(f)
     p_e, p_f = flottant.split(".")
-    
+
     return ".".join([p_e, p_f[:2]])
 
 def checkRoot(exitOnFail=False):
@@ -35,11 +35,11 @@ def checkRoot(exitOnFail=False):
             else:
 
                 return False
-    
+
         else:
 
             return True
-    
+
     elif os.name == "nt":
 
         if ctypes.windll.shell32.IsUserAnAdmin() != 1: # IF NOT ADMIN
@@ -50,7 +50,7 @@ def checkRoot(exitOnFail=False):
                 exit()
 
             else:
-                
+
                 return False
 
         else:
@@ -121,6 +121,6 @@ def cs():
     elif os.name == "nt":
 
         os.system("cls")
-  
+
 if __name__ == "__main__":
     pass

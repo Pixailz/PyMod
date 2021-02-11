@@ -12,9 +12,9 @@ from utils import *
 ##
 
 class SubnetScan():
-    
+
     def __init__(self, target, timeout=2.5, o=True):
-    
+
         self.target = target
         self.ipup = []
         self.timeout = timeout
@@ -33,7 +33,7 @@ class SubnetScan():
             self.output()
 
     def isup(self, target, x):
-        
+
         if os.name == "posix":
 
             ping = subprocess.run(["ping", "-c", "1", "-s", "0", target], stdout=subprocess.PIPE)
@@ -45,9 +45,9 @@ class SubnetScan():
         if "ttl=" in str(ping.stdout).lower():
 
             self.ipup.append(x)
-    
+
     def threading(self):
-        
+
         count = 0
 
         for x in range(0,255+1):
@@ -68,7 +68,7 @@ class SubnetScan():
 
         self.ipup.sort(reverse=True)
         for x in range(len(self.ipup)):
-        
+
             print("{}.{} is up".format(self.target, self.ipup[x]))
 
 if __name__ == "__main__":

@@ -36,20 +36,20 @@ def init_modules():
                 modules[value] = mod
 
     except FileNotFoundError:
-        
+
         print(f"modules folder not found, exiting ..")
         exit()
 
 def printHelp(arg=0):
-    
+
     if arg == 0:
-    
+
         print("list of available command : ")
 
         for v in available_command:
 
             print("    ",v)
-    
+
     elif arg == 1:
 
         print("List of available module")
@@ -63,13 +63,13 @@ def contentCheck(content, module_used):
     print(content, module_used)
 
 def loadMod(module, argument=None):
-    
-    if module == "scan_port": 
-        
+
+    if module == "scan_port":
+
         scan_port = modules["scan_port"].ScanMachine(target=argument, output="console")
 
         contentCheck(content=scan_port.getoutPut(), module_used=module)
-        
+
     elif module == "scan_subnet":
 
         target = modules["scan_subnet"].SubnetScan(argument)
@@ -83,7 +83,7 @@ def checkEntry(command, argument=[]):
     if command == "use":
 
         if len(argument) > 1 and argument[0] in modules:
-            
+
             mod = argument[0]
             arg = "|".join(argument[1:])
             loadMod(module=mod, argument=arg)
@@ -96,11 +96,11 @@ def checkEntry(command, argument=[]):
         cs()
 
     elif command == "exit":
-        
+
         exit()
 
     elif command == "help":
-        
+
         printHelp()
 
     else:
@@ -110,17 +110,17 @@ def checkEntry(command, argument=[]):
 def mainLoop():
 
     init_modules()
-    
+
     cs()
-    
+
     #welcomeMess()
-    
+
     loop = True
 
     while loop:
 
         entry = input("Pix@PyMod : ").strip()
-        
+
         if len(entry.split(" ")) == 1:
             hasArgument = False
         else:
